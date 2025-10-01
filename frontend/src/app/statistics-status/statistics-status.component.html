@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h1 class="mb-4 text-center">Reservation Status Statistics</h1>
+  <div class="text-center mb-4">
+    <a routerLink="/statistics" class="btn btn-secondary">View Day-wise Statistics</a>
+  </div>
+
+  <!-- Filter Form -->
+  <app-statistics-filter (filterApplied)="onFilterApplied($event)"></app-statistics-filter>
+
+  <div *ngIf="statusCounts.length === 0" class="alert alert-info text-center">
+    No results found. Please adjust your filters.
+  </div>
+
+  <div *ngIf="statusCounts.length > 0">
+    <!-- Statistics Table -->
+  <div class="card mb-4">
+    <div class="card-header">
+      Status Counts
+    </div>
+    <div class="card-body table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stat of statusCounts">
+            <td>{{ stat.status }}</td>
+            <td>{{ stat.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="card">
+    <div class="card-header">
+      Status Statistics Chart
+    </div>
+    <div class="card-body">
+      <canvas
+        #chart
+        baseChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="barChartType">
+      </canvas>
+    </div>
+  </div>
+</div>

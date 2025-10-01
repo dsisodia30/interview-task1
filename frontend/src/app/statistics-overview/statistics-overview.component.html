@@ -1,0 +1,92 @@
+<div class="container mt-4">
+  <h1 class="mb-4 text-center">Reservation Statistics Overview</h1>
+  <div class="text-center mb-4">
+    <a routerLink="/statistics/status" class="btn btn-secondary">View Status Statistics</a>
+  </div>
+
+  <!-- Filter Form -->
+  <app-statistics-filter (filterApplied)="onFilterApplied($event)"></app-statistics-filter>
+
+  <div *ngIf="statistics.length === 0 && statusCounts.length === 0" class="alert alert-info text-center">
+    No results found. Please adjust your filters.
+  </div>
+
+  <div *ngIf="statistics.length > 0 || statusCounts.length > 0">
+    <!-- Weekday Statistics Table -->
+  <div class="card mb-4">
+    <div class="card-header">
+      Weekday Statistics Table
+    </div>
+    <div class="card-body table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Weekday</th>
+            <th>Reservation Count</th>
+            <th>Total Group Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stat of statistics">
+            <td>{{ stat.weekday }}</td>
+            <td>{{ stat.reservationCount }}</td>
+            <td>{{ stat.totalGroupSize }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Weekday Chart -->
+  <div class="card mb-4">
+    <div class="card-header">
+      Weekday Statistics Chart
+    </div>
+    <div class="card-body">
+      <canvas
+        baseChart
+        [data]="weekdayBarChartData"
+        [options]="weekdayBarChartOptions"
+        [type]="weekdayBarChartType">
+      </canvas>
+    </div>
+  </div>
+
+  <!-- Status Statistics Table -->
+  <div class="card mb-4">
+    <div class="card-header">
+      Status Statistics Table
+    </div>
+    <div class="card-body table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stat of statusCounts">
+            <td>{{ stat.status }}</td>
+            <td>{{ stat.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Status Chart -->
+  <div class="card">
+    <div class="card-header">
+      Status Statistics Chart
+    </div>
+    <div class="card-body">
+      <canvas
+        baseChart
+        [data]="statusBarChartData"
+        [options]="statusBarChartOptions"
+        [type]="statusBarChartType">
+      </canvas>
+    </div>
+  </div>
+</div>
